@@ -18,7 +18,7 @@ GO
 ALTER TABLE [dbo].[Plane]
 	WITH CHECK
 	ADD CONSTRAINT [FK_Plane_flight]
-	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[flight] ([flight_num])
+	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[flight] ([flight_num_])
 ALTER TABLE [dbo].[Plane]
 	CHECK CONSTRAINT [FK_Plane_flight]
 
