@@ -3,5 +3,5 @@
   <ServerVersion>Sql2016</ServerVersion>
   <ServerName>DESKTOP-DP8DRRP</ServerName>
   <DatabaseName>AirportData</DatabaseName>
-  <DatabaseInformation Version="9" />
+  <DatabaseInformation Version="10" />
 </DatabaseSettings>
