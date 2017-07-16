@@ -16,5 +16,13 @@ CREATE TABLE [dbo].[Airline] (
 	ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[Airline]
+	WITH CHECK
+	ADD CONSTRAINT [FK_Airline_flight]
+	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[flight] ([flight_num])
+ALTER TABLE [dbo].[Airline]
+	CHECK CONSTRAINT [FK_Airline_flight]
+
+GO
 ALTER TABLE [dbo].[Airline] SET (LOCK_ESCALATION = TABLE)
 GO

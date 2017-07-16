@@ -7,8 +7,8 @@ CREATE PROCEDURE [dbo].[insert_arrival]
 	@flight_num numeric(18,0)
 as
 begin
-	--begin try
-		--begin tran
+	begin try
+		begin tran
 		
 		declare @id int
 		exec sp_get_next_id 'Arrival', @id output
@@ -29,14 +29,14 @@ begin
 				@id
 		end
 
-		--commit
-	--end try
-	--begin catch
+		commit
+	end try
+	begin catch
 		--IF @@TRANCOUNT > 0
 		--	rollback
 		--declare @ErrorMessage varchar(200)
 		--select @ErrorMessage = 'value not found in table'
 		--RAISERROR (@ErrorMessage, 16, 1);
-	--end catch
+	end catch
 end
 GO
