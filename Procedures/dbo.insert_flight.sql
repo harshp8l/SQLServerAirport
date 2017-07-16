@@ -2,7 +2,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[insert_flight]
-	@flight_num numeric(18,0),
+	@flight_num numeric(18,0) output,
 	@pilot_id numeric(18,0),
 	@airline_carrier varchar(50),
 	@year numeric(18,0)
