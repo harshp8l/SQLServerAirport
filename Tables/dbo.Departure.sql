@@ -16,7 +16,7 @@ GO
 ALTER TABLE [dbo].[Departure]
 	WITH CHECK
 	ADD CONSTRAINT [FK_Departure_flight]
-	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[flight] ([flight_num_])
+	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[Flight] ([flight_num_])
 ALTER TABLE [dbo].[Departure]
 	CHECK CONSTRAINT [FK_Departure_flight]
 
