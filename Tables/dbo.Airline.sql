@@ -7,10 +7,12 @@ CREATE TABLE [dbo].[Airline] (
 		[pilot_id]             [numeric](18, 0) NULL,
 		[flight_num]           [numeric](18, 0) NOT NULL,
 		[carry_on_bag_fee]     [numeric](18, 0) NULL,
+		[terminal]             [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+		[id]                   [int] NOT NULL,
 		CONSTRAINT [PK_Airline]
 		PRIMARY KEY
 		CLUSTERED
-		([airline_carrier], [flight_num])
+		([id])
 	ON [PRIMARY]
 ) ON [PRIMARY]
 GO

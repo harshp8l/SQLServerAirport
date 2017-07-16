@@ -2,34 +2,41 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[insert_arrival]
-	@arrival_time numeric(18,0) output,
+	@arrival_time numeric(18,0),
 	@arrival_city varchar(50),
 	@flight_num numeric(18,0)
 as
 begin
-	begin try
-		begin tran
+	--begin try
+		--begin tran
 		
-		exec sp_get_next_id 'Arrival', @arrival_time output
+		declare @id int
+		exec sp_get_next_id 'Arrival', @id output
 
-		if (@arrival_time > 0) 
+		if (@id > 0) 
 		begin
 			insert Arrival
 			(
 				arrival_time,
 				arrival_city,
-				flight_num
+				flight_num,
+				id
 			)
 			select
 				@arrival_time,
 				@arrival_city,
-				@flight_num
+				@flight_num,
+				@id
 		end
 
-		commit
-	end try
-	begin catch
-		-- do some shit
-	end catch
+		--commit
+	--end try
+	--begin catch
+		--IF @@TRANCOUNT > 0
+		--	rollback
+		--declare @ErrorMessage varchar(200)
+		--select @ErrorMessage = 'value not found in table'
+		--RAISERROR (@ErrorMessage, 16, 1);
+	--end catch
 end
 GO

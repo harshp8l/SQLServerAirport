@@ -6,15 +6,16 @@ CREATE PROCEDURE [dbo].[insert_plane]
 	@plane_manufacturer varchar(50),
 	@material varchar(50),
 	@num_seats numeric(18,0),
-	@model_num numeric(18,0) output
+	@model_num numeric(18,0)
 as
 begin
 	begin try
 		begin tran
 		
-		exec sp_get_next_id'Plane', @model_num output
+		declare @id int
+		exec sp_get_next_id 'Plane', @id output
 
-		if (@model_num > 0) 
+		if (@id > 0) 
 		begin
 			insert plane
 			(
@@ -22,20 +23,24 @@ begin
 				plane_manufacturer,
 				material,
 				num_of_seats,
-				model_num
+				model_num,
+				id
 			)
 			select
 				@flight_num,
 				@plane_manufacturer,
 				@material,
 				@num_seats,
-				@model_num
+				@model_num,
+				@id
 		end
 
 		commit
 	end try
 	begin catch
-		-- do some shit
+		declare @ErrorMessage varchar(200)
+		select @ErrorMessage = 'value not found in table'
+		RAISERROR (@ErrorMessage, 16, 1);
 	end catch
 end
 GO

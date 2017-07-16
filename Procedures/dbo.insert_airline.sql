@@ -6,34 +6,40 @@ CREATE PROCEDURE [dbo].[insert_airline]
 	@pilot_id numeric(18,0),
 	@airline_carrier varchar(50),
 	@carry_on_bag_fee numeric(18,0)
+
 as
 begin
 
 	begin try
 		begin tran
-
-		exec sp_get_next_id 'Airline', @flight_num output
 		
-		if(@flight_num > 0)
+		declare @id int		
+		exec sp_get_next_id 'Airline', @id output
+		
+		if(@id > 0)
 		begin
 			insert Airline
 			(
 				airline_carrier,
 				pilot_id,
 				flight_num,
-				carry_on_bag_fee
+				carry_on_bag_fee,
+				id
 			)
 			select
+				@airline_carrier,
 				@flight_num,
 				@pilot_id,
-				@airline_carrier,
-				@carry_on_bag_fee
+				@carry_on_bag_fee,
+				@id
 		end
 		
 		commit
 	end try
 	begin catch
-		-- do something
+		declare @ErrorMessage varchar(200)
+		select @ErrorMessage = 'value not found in table'
+		RAISERROR (@ErrorMessage, 16, 1);
 	end catch
 end
 GO

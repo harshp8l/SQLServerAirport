@@ -10,26 +10,31 @@ begin
 	begin try
 		begin tran
 		
-		exec sp_get_next_id 'Departure', @departure_time output
+		declare @id int
+		exec sp_get_next_id 'Departure', @id output
 
-		if (@departure_city <> '') 
+		if (@id > 0) 
 		begin
 			insert Departure
 			(
 				departure_time,
 				departure_city,
-				flight_num
+				flight_num,
+				id
 			)
 			select
 				@departure_time,
 				@departure_city,
-				@flight_num
+				@flight_num,
+				@id
 		end
 
 		commit
 	end try
 	begin catch
-		-- do some shit
+		declare @ErrorMessage varchar(200)
+		select @ErrorMessage = 'value not found in table'
+		RAISERROR (@ErrorMessage, 16, 1);
 	end catch
 end
 GO
