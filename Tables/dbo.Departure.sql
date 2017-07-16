@@ -13,5 +13,13 @@ CREATE TABLE [dbo].[Departure] (
 	ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[Departure]
+	WITH CHECK
+	ADD CONSTRAINT [FK_Departure_flight]
+	FOREIGN KEY ([flight_num]) REFERENCES [dbo].[Flight] ([flight_num])
+ALTER TABLE [dbo].[Departure]
+	CHECK CONSTRAINT [FK_Departure_flight]
+
+GO
 ALTER TABLE [dbo].[Departure] SET (LOCK_ESCALATION = TABLE)
 GO
