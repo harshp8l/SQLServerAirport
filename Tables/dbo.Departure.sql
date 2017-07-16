@@ -4,7 +4,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Departure] (
 		[flight_num]         [numeric](18, 0) NOT NULL,
-		[departure_time]     [numeric](18, 0) NOT NULL,
+		[departure_time]     [time](7) NOT NULL,
 		[departure_city]     [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 		[id]                 [int] NOT NULL,
 		CONSTRAINT [PK_Departure]

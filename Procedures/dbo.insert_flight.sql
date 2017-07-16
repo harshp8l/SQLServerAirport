@@ -12,7 +12,7 @@ begin
 	begin try
 		begin tran
 
-		exec sp_get_next_id 'Airline', @flight_num output
+		--exec sp_get_next_id 'Airline', @flight_num output
 		
 		if(@flight_num > 0)
 		begin

@@ -5,7 +5,8 @@ CREATE PROCEDURE [dbo].[insert_airline]
 	@flight_num numeric(18,0),
 	@pilot_id numeric(18,0),
 	@airline_carrier varchar(50),
-	@carry_on_bag_fee numeric(18,0)
+	@carry_on_bag_fee numeric(18,0),
+	@terminal int
 
 as
 begin
@@ -20,17 +21,19 @@ begin
 		begin
 			insert Airline
 			(
-				airline_carrier,
-				pilot_id,
 				flight_num,
+				pilot_id,
+				airline_carrier,
 				carry_on_bag_fee,
+				terminal,
 				id
 			)
 			select
-				@airline_carrier,
 				@flight_num,
 				@pilot_id,
+				@airline_carrier,
 				@carry_on_bag_fee,
+				@terminal,
 				@id
 		end
 		

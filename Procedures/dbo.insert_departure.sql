@@ -2,7 +2,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[insert_departure]
-	@departure_time numeric(18,0) output,
+	@departure_time time(7),
 	@departure_city varchar(50),
 	@flight_num numeric(18,0)
 as

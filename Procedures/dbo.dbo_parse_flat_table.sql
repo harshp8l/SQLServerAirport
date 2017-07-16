@@ -4,11 +4,13 @@ GO
 CREATE PROCEDURE [dbo].[dbo_parse_flat_table]
 as
 begin
-	delete from flight
-	delete from Airline
-	delete from Plane
 	delete from Arrival
 	delete from Departure
+	delete from Airline
+	delete from Plane
+	delete from flight
+	
+	
 
 	--declare variables
 	declare @flight_num	numeric(18,0),
@@ -17,14 +19,16 @@ begin
 			@year numeric(18,0),
 			@carry_on_bag_fee numeric(18,0),
 			@terminal nchar(10),
-			@arrival_time numeric(18,0),
+			@arrival_time time(7),
 			@arrival_city varchar(50),
-			@departure_time numeric(18,0),
+			@departure_time time(7),
 			@departure_city varchar(50),
 			@plane_manufacturer varchar(50),
 			@material varchar(50),
 			@num_of_seats numeric(18,0),
 			@model_num numeric(18,0)
+
+	declare @id int
 
 	declare curs1 cursor
 	for
@@ -44,37 +48,89 @@ begin
 		num_of_seats,
 		model_num
 
-	from [sd_airport_flat_table - flat_table]
+	from [sd_airport_flat_table]
 
 	open curs1
 		fetch next from curs1 into @flight_num, @pilot_id, @airline_carrier, @year, @carry_on_bag_fee, @terminal, @arrival_time, @arrival_city, @departure_time, @departure_city, @plane_manufacturer, @material, @num_of_seats, @model_num
 		while (@@FETCH_STATUS = 0)
 		begin
+			
+			--inserting flight
 			if(not exists(select * from flight where flight_num=@flight_num))
 			begin
 				exec insert_flight @flight_num, @pilot_id, @airline_carrier, @year
 			end
 
-			if(not exists(select * from Airline where airline_carrier=@airline_carrier AND flight_num=@flight_num))
+			--inserting airline
+			select
+				@id = null
+
+			select
+				@id = id
+			from
+				Airline
+			where
+				flight_num = @flight_num
+			AND	airline_carrier = @airline_carrier
+
+			if (@id is null)
 			begin
-				exec insert_airline @flight_num, @pilot_id, @airline_carrier, @carry_on_bag_fee
+				exec insert_airline @flight_num, @pilot_id, @airline_carrier, @terminal, @carry_on_bag_fee
 			end
 
-			if(not exists(select * from Plane where flight_num=@flight_num AND model_num=@model_num))
+			--inserting plane
+			select
+				@id = null
+
+			select
+				@id = id
+			from
+				Plane
+			where
+				flight_num = @flight_num
+			AND	model_num = @model_num
+
+			if (@id is null)
 			begin
 				exec insert_plane @flight_num, @plane_manufacturer, @material, @num_of_seats, @model_num
 			end
 
-			if(not exists(select * from Arrival where flight_num=@flight_num AND arrival_time=@arrival_time AND arrival_city=@arrival_city))
+			--inserting arrival 
+			select
+				@id = null
+
+			select
+				@id = id
+			from
+				Arrival
+			where
+				flight_num = @flight_num
+			AND	arrival_time = @arrival_time
+			AND arrival_city = @arrival_city
+
+			if (@id is null)
 			begin
-				exec insert_arrival @flight_num, @arrival_time, @arrival_city
+				exec insert_arrival @arrival_time, @arrival_city, @flight_num
 			end
 
-			if(not exists(select * from Departure where flight_num=@flight_num AND departure_time=@departure_time AND departure_city=@departure_city))
+			--inserting departure
+			select
+				@id = null
+
+			select
+				@id = id
+			from
+				Departure
+			where
+				flight_num = @flight_num
+			AND	departure_time = @departure_time
+			AND departure_city = @departure_city
+
+			if (@id is null)
 			begin
-				exec insert_departure @flight_num, @departure_time, @departure_city
+				exec insert_departure @departure_time, @departure_city, @flight_num
 			end
-		
+			
 			fetch next from curs1 into @flight_num, @pilot_id, @airline_carrier, @year, @carry_on_bag_fee, @terminal, @arrival_time, @arrival_city, @departure_time, @departure_city, @plane_manufacturer, @material, @num_of_seats, @model_num
 		end
 
