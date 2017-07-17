@@ -18,7 +18,7 @@ begin
 			@airline_carrier varchar(50),
 			@year numeric(18,0),
 			@carry_on_bag_fee numeric(18,0),
-			@terminal nchar(10),
+			@terminal int,
 			@arrival_time time(7),
 			@arrival_city varchar(50),
 			@departure_time time(7),
