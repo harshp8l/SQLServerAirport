@@ -1,7 +1,7 @@
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure dbo.[sp_MSins_dboAirline]
+CREATE procedure dbo.[sp_MSins_dboAirline]
     @c1 varchar(50),
     @c2 numeric(18,0),
     @c3 numeric(18,0),

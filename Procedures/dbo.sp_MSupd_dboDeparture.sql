@@ -1,7 +1,7 @@
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure dbo.[sp_MSupd_dboDeparture]
+CREATE procedure dbo.[sp_MSupd_dboDeparture]
 		@c1 numeric(18,0) = NULL,
 		@c2 time = NULL,
 		@c3 varchar(50) = NULL,

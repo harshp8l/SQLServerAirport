@@ -1,7 +1,7 @@
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure dbo.[sp_MSdel_dboPlane]
+CREATE procedure dbo.[sp_MSdel_dboPlane]
 		@pkc1 int
 as
 begin  
