@@ -9,8 +9,6 @@ begin
 	delete from Airline
 	delete from Plane
 	delete from flight
-	
-	
 
 	--declare variables
 	declare @flight_num	numeric(18,0),

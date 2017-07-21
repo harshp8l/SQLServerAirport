@@ -19,5 +19,9 @@ CREATE TABLE [dbo].[sd_airport_flat_table] (
 		[material]               [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 ) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20170720-185808]
+	ON [dbo].[sd_airport_flat_table] ([flight_num], [airline_carrier], [departure_city], [arrival_city])
+	ON [PRIMARY]
+GO
 ALTER TABLE [dbo].[sd_airport_flat_table] SET (LOCK_ESCALATION = TABLE)
 GO
