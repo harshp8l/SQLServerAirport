@@ -1,0 +1,1 @@
+insert into next_id 'Order', 1
